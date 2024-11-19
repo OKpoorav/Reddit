@@ -1,16 +1,24 @@
 const button= document.querySelector('.new button');
 const cards =  document.querySelector('.main') 
 const input =  document.querySelector('.Input')
-const posts =  document.querySelectorAll('.post');
-console.log(posts);
+const nameR  = document.querySelector('.main');
 
-input.addEventListener('keydown',(e)=>{
+nameR.addEventListener('keydown',(e)=>{
+    if(e.target.matches('.Input')){
+    console.log('hi');
+    
+
 if(e.key==="Enter"){
-    input.outerHTML = `<h1>R/${input.value}</h1>`;
-    fetchData(input.value)
+    const laneElement = e.target.closest('.lane'); 
+    e.target.outerHTML = `<h1>R/${e.target.value}</h1>`;
+    
+   
+    
+    
+    fetchData(e.target.value,laneElement)
 
     
-    
+}
 }
 })
 button.addEventListener('click',(e)=>{
@@ -26,9 +34,10 @@ NewDiv.innerHTML= ` <div class="lane">
         </div>`;
 cards.appendChild(NewDiv)
 
+
 })
 
-async function fetchData(name) {
+async function fetchData(name,container) {
   const url = `https://www.reddit.com/r/${name}.json`;
 
   try {
@@ -37,10 +46,13 @@ async function fetchData(name) {
       throw new Error("Error in Fetching Data");
     }
     const json = await data.json();
+const posts =  container.querySelectorAll('.post');
+
     for (let i = 0; i < posts.length && i < json.data.children.length; i++) {
         let title = json.data.children[i + 1].data.title;
         let selftext = json.data.children[i + 1].data.selftext;
         let url = json.data.children[i + 1].data.url;
+
     
         selftext = selftext.replace(/https?:\/\/\S+/g, '');
     

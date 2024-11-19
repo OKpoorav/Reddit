@@ -6,6 +6,10 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     background-color: #212121;
+    color: rgb(93, 85, 85);
+}
+img{
+    object-fit: cover;
 }
 
 .main {
